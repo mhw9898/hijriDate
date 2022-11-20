@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<title>jQuery Calendars</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery.calendars.picker.css"> 
+<script type="text/javascript" src="js/jquery.plugin.min.js"></script> 
+<script type="text/javascript" src="js/jquery.calendars.js"></script> 
+<script type="text/javascript" src="js/jquery.calendars.picker.js"></script>
+<script type="text/javascript" src="js/jquery.calendars.plus.js"></script>
+
+<script type="text/javascript" src="js/jquery.calendars.ummalqura.js"></script> 
+<script type="text/javascript" src="js/jquery.calendars.ummalqura-ar.js"></script>
+
+<script>
+$(document).ready(function () {
+    //#region Display Calendars
+    var calendarH = $.calendars.instance('ummalqura', 'ar');
+    var calendarG = $.calendars.instance();
+    $('#txtBEGIN_DATE_H').calendarsPicker({
+        calendar: calendarH,
+        onSelect: showAutoBEGIN_J_Date
+    });
+    $('#txtBEGIN_DATE_G').calendarsPicker({
+        calendar: calendarG,
+        onSelect: showAutoBEGIN_H_Date
+    });
+            //#endregion
+});
+//#region Private Members
+var BEGIN_DATE_G;
+var END_DATE_G;
+// #endregion
+//#region Date Functions
+function showAutoBEGIN_J_Date(date) {
+    debugger;
+    var calendarG = $.calendars.instance();
+    var calendarH = $.calendars.instance('ummalqura');
+    var DateH = calendarH.parseDate('', $('#txtBEGIN_DATE_H').val());
+    var convertedFormatG = calendarG.formatDate('yyyy/mm/dd', calendarG.fromJD(DateH.toJD()));
+    //var convertedFormatH = calendarH.formatDate('yyyy-mm-dd', calendarH.fromJD(DateH.toJD()));
+    var convertedFormatH = calendarH.formatDate('dd/mm/yyyy', calendarH.fromJD(DateH.toJD()));
+    //BEGIN_DATE_G = calendarG.formatDate('yyyy/mm/dd', calendarG.fromJD(DateH.toJD()));
+    BEGIN_DATE_G = calendarG.formatDate('yyyymmdd', calendarG.fromJD(DateH.toJD()));
+    //alert(x);
+    $('#txtBEGIN_DATE_H').val(convertedFormatH);
+    $('#txtBEGIN_DATE_G').val(convertedFormatG);
+}
+function showAutoBEGIN_H_Date(date) {
+    var calendarG = $.calendars.instance();
+    var calendarH = $.calendars.instance('ummalqura');
+    var DateG = calendarG.parseDate('', $('#txtBEGIN_DATE_G').val());
+    var convertedFormatG = calendarG.formatDate('yyyy/mm/dd', calendarG.fromJD(DateG.toJD()));
+    //var convertedFormatH = calendarH.formatDate('yyyy-mm-dd', calendarH.fromJD(DateG.toJD()));
+    var convertedFormatH = calendarH.formatDate('dd/mm/yyyy', calendarH.fromJD(DateG.toJD()));
+    BEGIN_DATE_G = calendarG.formatDate('yyyymmdd', calendarG.fromJD(DateG.toJD()));
+    $('#txtBEGIN_DATE_H').val(convertedFormatH);
+    $('#txtBEGIN_DATE_G').val(convertedFormatG);
+}
+
+</script>
+</head>
+<body>
+<h1>jQuery Calendars hijri converter</h1>
+
+<input type="text" id="txtBEGIN_DATE_H"></input>
+
+<input type="text" id="txtBEGIN_DATE_G"></input>
+
+</body>
+</html>
